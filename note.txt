@@ -1,0 +1,99 @@
+коли ми додаємо змінні в css через 
+:root{
+
+}
+тобто глобально то шоб дістатися до них 
+через js нам потрібно прописати 
+
+const root = document.documentElement;
+
+root.getPropertyValue('--name'); отримати 
+root.style.setProperty('--name', value);
+
+далі робота з disabled кнопкою і input 
+
+для того шоб нам зробити динамічний ліміт 
+тобто коли текст задовіл наші норми 
+ми робимо кнопку disabled = false
+а для іншого true тобто задізейблена 
+
+ось приклад
+
+тут ми використовуємо input для того
+шоб слідкувати за input.value.length і для 
+кнопки саме головне шо кнопка є disabled = true 
+в inline-style
+
+input.addEventListener('input', () => {
+    if (input.value.length < 5) {
+        buttonAdd.disabled = true;
+    } else {
+        buttonAdd.disabled = false;
+    }
+});
+// button click add to massive 
+let counter = 0, resultMassive = Array(0);
+buttonAdd.addEventListener('click', e => {
+    let value = input.value
+    resultMassive.push(value)
+    e.preventDefault();
+    if (!buttonAdd.disabled) { тут ми дивимся якшо не задізейблена то все ок
+        input.value = '';
+    }
+})
+
+і також якшо нам потрібно перевіряти масив тобто 
+так само як з disabled тільки по величині масиву 
+ми також це робимо через input 
+
+
+також створення трикутника через border 
+
+border-left: 70px solid transparent;
+border-right: 70px solid transparent;
+border-top: або border-bottom: - за випадком і потребою 
+для цих (top, bottom) ми ставимо завжди більшу 
+і ще до цих стилів 
+
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%); вирівнюжємо 
+    width: 0; обнуляємо
+    height: 0; обнуляємо
+    border-left: calc(460px / var(--count_elements)) solid transparent;
+    border-right: calc(460px / var(--count_elements)) solid transparent;
+    border-top: calc(465.310px / 2) solid #fff4; це зразу і height
+    
+як уникнути проблеми з наслідуванням від батькіського і крутінням одночасно і стріли і кола 
+нам потрібно зрбити так:
+<section class="wrapper__main" >
+      <div class="main__wheel" ></div> - це коло для якого ми будемо писати transform: rotate(); і воно по розмірам має наслідуватися від батьківського 
+      <div class="chose_arrow" ></div> - це ми просто створюємо з position: absolute;
+</section>     
+
+важливо коли ми там додаємо елементи в блок то отримувати їх потрібно в addEventListener
+
+element.getBoundingClientRect() тобто ми беремо його кодинати тобто елемента 
+там є х y width height itc
+
+далі приклад з коду 
+buttonResult.addEventListener('click', e => {
+    e.preventDefault();
+    let spin = Math.random() * (10000 + 15000) - 10000;
+    root.style.setProperty('--rotate', spin + 'deg');
+    wheel.classList.add('rotate-animation');
+    setTimeout(() => { тут ми отримаємо значення і додамо вибране в span(текст) головне це зробити після 10секунд бо барабан крутиться 10секунд
+        let allAddedValues = document.querySelectorAll('.wrapper__main .main__wheel span a');
+        allAddedValues.forEach(element => {
+            let borders = arrow.getBoundingClientRect();
+            let elementX = element.getBoundingClientRect().x;
+            if(elementX >= borders.x && elementX <= (borders.x + borders.width) && elementPos.bottom <= borders.height - це ми мусимо обовязково додати для того шоб елемент повність був в arrow){ шоб наш елемент був в середині блока 
+                resWrite.innerText = element.textContent; додаємо текст отриманий 
+                console.log(element);
+            }
+        });
+    }, 10000)
+    resWrite.innerText = '' тут ми новлюємо дані тобто обнуляємо 
+})
+
+

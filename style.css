@@ -1,0 +1,118 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+button{
+    padding: 5px 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    user-select: none;
+}
+:root{
+    --count_elements: 0;
+    --res_value: calc(360deg / var(--count_elements));
+    --rotate: 0;
+}
+body{
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(168, 149, 149, 0.55);
+}
+.wrapper{
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.wrapper > * {
+    margin: 20px 0;
+}
+.wrapper__header { 
+    width: 90%;
+    display: flex;
+    height: min-content;
+}
+.header__input { 
+    width: 100%;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    outline: none;
+    color: #111;
+}
+.header__input::placeholder{
+    text-transform: capitalize;
+}
+.wrapper__main { 
+    position: relative;
+    overflow: hidden;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%
+}
+.main__wheel{
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    background-color: rgb(112, 85, 134);
+    border-radius: 50%;
+    transform-origin: center;
+    transform: rotate(0deg);
+    transition: transform 10s ease;
+}
+.chose_arrow{
+    position: absolute;
+    left: 50%;
+    top: 0%;
+    transform: translate(-50%);
+    width: 0;
+    height: 0;
+    border-left: calc(800px / var(--count_elements)) solid transparent;
+    border-right: calc(800px / var(--count_elements)) solid transparent;
+    border-top: calc(450px / 2) solid #fff4; 
+    display: none;
+}
+.rotate-animation {
+    transform: rotate(var(--rotate));
+    transition: transform 10s ease;
+}
+.wrapper__main span {
+    position: absolute;
+    inset: 20px;
+    display: flex;
+    justify-content: center;
+    transform: rotate(calc(var(--i) * var(--res_value)));
+}
+.wrapper__main span a{
+    position: absolute;
+    text-decoration: none;
+    color: #fff;
+    /* transform: rotate(calc(-1 * var(--i) *  var(--res_value))); */
+}
+.wrapper__footer { 
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+}
+@keyframes run {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(345deg);
+    }
+}
+@keyframes arrow {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(-345deg);
+    }
+}
